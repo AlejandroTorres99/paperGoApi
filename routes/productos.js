@@ -1,16 +1,32 @@
-// backend/routes/productos.js
+// routes/productos.js
+
 const express = require('express');
 const router = express.Router();
+const Producto = require('../models/producto');
 
-// Controladores de productos
-router.get('/', (req, res) => {
-  // Lógica para obtener todos los productos desde MongoDB
-  res.send('Obtener todos los productos');
+// Obtener todos los productos
+router.get('/', async (req, res) => {
+  try {
+    const productos = await Producto.find();
+    res.json(productos);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
-router.post('/', (req, res) => {
-  // Lógica para agregar un nuevo producto a MongoDB
-  res.send('Agregar un nuevo producto');
+// Crear un nuevo producto
+router.post('/', async (req, res) => {
+  // Lógica para crear un nuevo producto en la base de datos
 });
 
-module.exports = router; // ¡Asegúrate de tener esta línea para exportar el router!
+// Actualizar un producto (like, calificación, etc.)
+router.put('/:id', async (req, res) => {
+  // Lógica para actualizar un producto en la base de datos
+});
+
+// Eliminar un producto
+router.delete('/:id', async (req, res) => {
+  // Lógica para eliminar un producto de la base de datos
+});
+
+module.exports = router;

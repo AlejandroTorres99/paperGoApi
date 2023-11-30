@@ -1,12 +1,13 @@
-// backend/index.js
+// Importar dependencias
 const express = require('express');
 const mongoose = require('mongoose');
-const productosRouter = require('./routes/productos'); 
 
+// Configurar Express
 const app = express();
+app.use(express.json());
 
-// Conexión a la base de datos MongoDB
-mongoose.connect('mongodb://localhost:27017/tu_base_de_datos', {
+// Conexión a MongoDB
+mongoose.connect('mongodb://localhost:27017/nombre_de_tu_base_de_datos', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
@@ -17,13 +18,10 @@ db.once('open', () => {
   console.log('Conexión exitosa a MongoDB');
 });
 
-// Middleware para procesar solicitudes JSON
-app.use(express.json());
+// Rutas de la API
+app.use('/api/productos', require('./routes/productos'));
 
-// Rutas y middlewares aquí...
-app.use('/productos', productosRouter);
-
-// Puerto en el que correrá el servidor
+// Puerto del servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en el puerto ${PORT}`);
